@@ -3,41 +3,43 @@ pipeline {
 
     stages {
 
-        stage(‘Checkout’) {
+        stage('Checkout') {
             steps {
                 checkout scm
             }
         }
 
-        stage(‘Setup Virtual Environment’) {
+        stage('Setup Virtual Environment') {
             steps {
-                bat ‘’’
+                bat """
+                python --version
                 python -m venv venv
-                ‘’’
+                """
             }
         }
 
-        stage(‘Install Dependencies’) {
+        stage('Install Dependencies') {
             steps {
-                bat ‘’’
+                bat """
+                venv\\Scripts\\python -m pip install --upgrade pip
                 venv\\Scripts\\pip install -r requirements.txt
-                ‘’’
+                """
             }
         }
 
-        stage(‘Run Migrations’) {
+        stage('Run Migrations') {
             steps {
-                bat ‘’’
+                bat """
                 venv\\Scripts\\python manage.py migrate
-                ‘’’
+                """
             }
         }
 
-        stage(‘Run Tests’) {
+        stage('Run Tests') {
             steps {
-                bat ‘’’
+                bat """
                 venv\\Scripts\\python manage.py test
-                ‘’’
+                """
             }
         }
     }
