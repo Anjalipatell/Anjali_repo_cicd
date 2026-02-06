@@ -46,8 +46,14 @@ pipeline {
         stage('Deploy Application') {
             steps {
                 bat """
-                if not exist C:\\deploy mkdir C:\\deploy
-                xcopy /E /Y %WORKSPACE% C: \\deploy\\django-todo
+                echo Starting deployment...
+
+                mkdir C:\\deploy 2>Nul
+                rmdir /S /Q C:\\deploy\\django-todo 2>Nul
+
+                
+                robocopy %WORKSPACE% C: \\deploy\\django-todo /E
+                IF %ERROELEVEL% LEQ 3 exit 0
                 """
             }
         }
