@@ -12,8 +12,8 @@ pipeline {
         stage('Setup Virtual Environment') {
             steps {
                 bat """
-                python --version
-                python -m venv venv
+                py --version
+                py -m venv venv
                 """
             }
         }
@@ -21,8 +21,9 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 bat """
-                venv\\Scripts\\python -m pip install --upgrade pip
-                venv\\Scripts\\pip install -r requirements.txt
+                venv\\Scripts\\activate
+                pip install --upgrade pip
+                pip install -r requirements.txt
                 """
             }
         }
@@ -39,6 +40,14 @@ pipeline {
             steps {
                 bat """
                 venv\\Scripts\\python manage.py test
+                """
+            }
+        }
+        stage('Deploy Application') {
+            steps {
+                bat """
+                if not exist C:\\deploy mkdir C:\\deploy
+                xcopy /E /Y %WORKSPACE% C: \\deploy\\django-todo
                 """
             }
         }
