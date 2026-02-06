@@ -12,8 +12,8 @@ pipeline {
         stage('Setup Virtual Environment') {
             steps {
                 bat """
-                "C:\\Users\\Anjali\\AppData\\Local\\Programs\\Python\\Python311\\python.exe" --version
-                "C:\\Users\\Anjali\\AppData\\Local\\Programs\\Python\\Python311\\python.exe" -m venv venv
+                "C:\Users\Administrator\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Python 3.14" --version
+                "C:\Users\Administrator\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Python 3.14" -m venv venv
                 """
             }
         }
